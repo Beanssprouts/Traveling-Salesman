@@ -103,6 +103,28 @@ def eGreedy():
 
 
 def simulation(t, e):
-    pass
+    optimumTotal = c2happy() * t
+    exploitOnlyExpectedH = exploitOnly(t)
+    exploreOnlyExpectedH = exploreOnly(t)
+    eGreedyExpectedH = eGreedy(t, e)
+    exploreAverage = exploreOnly(t) / t
+    exploitAverage = exploitOnly(t) / t
+    eGreedyAverage = eGreedy(t, e) / t
+    exploitOnlyRegret = optimumTotal - exploitOnly(t)
+    exploreOnlyRegret = optimumTotal - exploreOnly(t)
+    eGreedyRegret = optimumTotal - eGreedy(t, e)
+    exploitaveregret = exploitOnlyRegret / t
+    exploreaveregret = exploreOnlyRegret / t
+    eGreedyaveregret = eGreedyRegret / t
+    hello = ("optimum total:", optimumTotal, "exploit Only Expected Regret:", exploitOnlyRegret, "explore Only Expected Regret:",
+            exploreOnlyRegret, "eGreedy Expected Regret:", eGreedyRegret, "exploitOnly expected Happiness",
+            exploitOnlyExpectedH, "exploreOnly Expected Happiness", exploreOnlyExpectedH,
+            "eGreedy Expected Happiness:", eGreedyExpectedH, "exploit Only average:", exploreAverage,
+             "exploit only average:", exploitAverage, "eGreedy average:", eGreedyAverage, "exploit Only average regret:",
+             exploitaveregret, "explore only average regret:", exploreaveregret, "eGreedy average regret:",
+             eGreedyaveregret)
+    return hello
 
-eGreedy()
+t = 10000
+e = 10
+print(simulation(t, e))
