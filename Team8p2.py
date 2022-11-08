@@ -103,28 +103,64 @@ def eGreedy():
 
 
 def simulation(t, e):
-    optimumTotal = c2happy() * t
-    exploitOnlyExpectedH = exploitOnly(t)
-    exploreOnlyExpectedH = exploreOnly(t)
-    eGreedyExpectedH = eGreedy(t, e)
-    exploreAverage = exploreOnly(t) / t
-    exploitAverage = exploitOnly(t) / t
-    eGreedyAverage = eGreedy(t, e) / t
-    exploitOnlyRegret = optimumTotal - exploitOnly(t)
-    exploreOnlyRegret = optimumTotal - exploreOnly(t)
-    eGreedyRegret = optimumTotal - eGreedy(t, e)
-    exploitaveregret = exploitOnlyRegret / t
-    exploreaveregret = exploreOnlyRegret / t
-    eGreedyaveregret = eGreedyRegret / t
-    hello = ("optimum total:", optimumTotal, "exploit Only Expected Regret:", exploitOnlyRegret, "explore Only Expected Regret:",
-            exploreOnlyRegret, "eGreedy Expected Regret:", eGreedyRegret, "exploitOnly expected Happiness",
-            exploitOnlyExpectedH, "exploreOnly Expected Happiness", exploreOnlyExpectedH,
-            "eGreedy Expected Happiness:", eGreedyExpectedH, "exploit Only average:", exploreAverage,
-             "exploit only average:", exploitAverage, "eGreedy average:", eGreedyAverage, "exploit Only average regret:",
-             exploitaveregret, "explore only average regret:", exploreaveregret, "eGreedy average regret:",
-             eGreedyaveregret)
-    return hello
+    ophappy = []
+    ophappy.append(exploitOnly() / 300)
+    ophappy.append(exploreOnly() / 300)
+    ophappy.append(eGreedy() / 300)
+    ophappy.sort()
+    optimumTotal = ophappy[2] * 300
 
-t = 10000
+    exploitOnlyExpectedH = exploitOnly()
+    exploreOnlyExpectedH = exploreOnly()
+    eGreedyExpectedH = eGreedy()
+
+    exploitOnlyRegret = optimumTotal - exploitOnly()
+    exploreOnlyRegret = optimumTotal - exploreOnly()
+    eGreedyRegret = optimumTotal - eGreedy()
+
+    exploitave = []
+    exploitreg = []
+    for i in range(t):
+        exploitave.append(exploitOnly())
+        exploitreg.append(optimumTotal - exploitOnly())
+    exploitAverage = sum(exploitave) / t
+    exploitaveregret = sum(exploitreg) / t
+
+    exploreave = []
+    explorereg = []
+    for i in range(t):
+        exploreave.append(exploreOnly())
+        explorereg.append(optimumTotal - exploreOnly())
+    exploreAverage = sum(exploreave) / t
+    exploreaveregret = sum(explorereg) / t
+
+    eGreedyave = []
+    eGreedyreg = []
+    for i in range(t):
+        eGreedyave.append(eGreedy())
+        eGreedyreg.append(optimumTotal - eGreedy())
+    eGreedyAverage = sum(eGreedyave) / t
+    eGreedyaveregret = sum(eGreedyreg) / t
+
+    d = {"Optimum Hapiness               ": optimumTotal,
+         "Exploit Only Expected Happiness": exploitOnlyExpectedH,
+         "Explore Only Expected Happiness": exploreOnlyExpectedH,
+         "eGreedy Expected Happiness     ": eGreedyExpectedH,
+         "Exploit Only Expected Regret   ": exploitOnlyRegret,
+         "Explore Only Expected Regret   ": exploreOnlyRegret,
+         "eGreedy Expected Regret        ": eGreedyRegret,
+         "Exploit Only Average Happiness ": exploitAverage,
+         "Explore Only Average Happiness ": exploreAverage,
+         "eGreedy Average Happiness      ": eGreedyAverage,
+         "Exploit Only Average Regret    ": exploitaveregret,
+         "Explore Only Average Regret    ": exploreaveregret,
+         "eGreedy Average Regret         ": eGreedyaveregret
+
+         }
+
+    for k, v in d.items():
+        print(k, v)
+
+t = 10
 e = 10
 print(simulation(t, e))
