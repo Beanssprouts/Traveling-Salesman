@@ -161,6 +161,6 @@ def simulation(t, e):
     for k, v in d.items():
         print(k, v)
 
-t = 10
+t = 1000
 e = 10
 print(simulation(t, e))
