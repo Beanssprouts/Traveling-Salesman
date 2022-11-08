@@ -103,13 +103,8 @@ def eGreedy():
 
 
 def simulation(t, e):
-    ophappy = []
-    ophappy.append(exploitOnly() / 300)
-    ophappy.append(exploreOnly() / 300)
-    ophappy.append(eGreedy() / 300)
-    ophappy.sort()
-    optimumTotal = ophappy[2] * 300
-
+    optimumTotal = 4500 
+    
     exploitOnlyExpectedH = exploitOnly()
     exploreOnlyExpectedH = exploreOnly()
     eGreedyExpectedH = eGreedy()
