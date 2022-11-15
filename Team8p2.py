@@ -1,16 +1,20 @@
 import random
 
+
 def c1happy():
     happy = random.normalvariate(10, 8)
     return happy
+
 
 def c2happy():
     happy = random.normalvariate(15, 6)
     return happy
 
+
 def c3happy():
     happy = random.normalvariate(12, 5)
     return happy
+
 
 def exploitOnly():
     happinessList = []
@@ -31,11 +35,12 @@ def exploitOnly():
         for i in range(297):
             happinessList.append(c2happy())
 
-    elif highNum == happinessList[2]:
+    else:
         for i in range(297):
             happinessList.append(c3happy())
 
     return sum(happinessList)
+
 
 def exploreOnly():
     happinessList = []
@@ -51,12 +56,12 @@ def exploreOnly():
 
     return sum(happinessList)
 
-def eGreedy():
+
+def eGreedy(e):
     happinessList = []
     c1 = []
     c2 = []
     c3 = []
-    e = 10
 
     happinessList.append(c1happy())
     c1.append(c1happy())
@@ -66,7 +71,7 @@ def eGreedy():
     c3.append(c3happy())
 
     for i in range(300):
-        r = random.random()*100
+        r = random.random() * 100
         if r < e:
             cafe = random.randint(1, 3)
 
@@ -78,7 +83,7 @@ def eGreedy():
                 happinessList.append(c2happy())
                 c2.append(c2happy())
 
-            elif cafe == 3:
+            else:
                 happinessList.append(c3happy())
                 c3.append(c3happy())
 
@@ -95,23 +100,24 @@ def eGreedy():
                 happinessList.append(c2happy())
                 c2.append(c2happy())
 
-            elif c3avg > c1avg and c3avg > c2avg:
+            else:
                 happinessList.append(c3happy())
                 c3.append(c3happy())
 
-    print(sum(happinessList))
+    return sum(happinessList)
 
 
 def simulation(t, e):
-    optimumTotal = 4500 
-    
-    exploitOnlyExpectedH = exploitOnly()
-    exploreOnlyExpectedH = exploreOnly()
-    eGreedyExpectedH = eGreedy()
 
-    exploitOnlyRegret = optimumTotal - exploitOnly()
-    exploreOnlyRegret = optimumTotal - exploreOnly()
-    eGreedyRegret = optimumTotal - eGreedy()
+    optimumTotal = 4500
+
+    exploitOnlyExpectedH = 15 + 12 + 10 + (297 * 15)
+    exploreOnlyExpectedH = (100 * 10) + (100 * 12) + (100 * 15)
+    eGreedyExpectedH = (e *12) + (e*15) + (e*10) + ((100-e)/100) * 300 * 15
+
+    exploitOnlyRegret = optimumTotal - exploitOnlyExpectedH
+    exploreOnlyRegret = optimumTotal - exploreOnlyExpectedH
+    eGreedyRegret = optimumTotal - eGreedyExpectedH
 
     exploitave = []
     exploitreg = []
@@ -132,8 +138,8 @@ def simulation(t, e):
     eGreedyave = []
     eGreedyreg = []
     for i in range(t):
-        eGreedyave.append(eGreedy())
-        eGreedyreg.append(optimumTotal - eGreedy())
+        eGreedyave.append(eGreedy(e))
+        eGreedyreg.append(optimumTotal - eGreedy(e))
     eGreedyAverage = sum(eGreedyave) / t
     eGreedyaveregret = sum(eGreedyreg) / t
 
@@ -150,12 +156,10 @@ def simulation(t, e):
          "Exploit Only Average Regret    ": exploitaveregret,
          "Explore Only Average Regret    ": exploreaveregret,
          "eGreedy Average Regret         ": eGreedyaveregret
-
          }
 
     for k, v in d.items():
         print(k, v)
+    print("--- end of output ---")
 
-t = 1000
-e = 10
-print(simulation(t, e))
+print (simulation(1000, 10))
